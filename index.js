@@ -4,6 +4,24 @@ const dateYear = document.querySelector(".year");
 let sections = document.querySelectorAll("section");
 let navLinks = document.querySelectorAll("header nav a");
 
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const targetId = link.getAttribute("href");
+
+    if (!targetId || targetId === "#") return;
+
+    const target = document.querySelector(targetId);
+    if (!target) return;
+
+    event.preventDefault();
+    const offset = 100;
+    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+    window.scrollTo({ top, behavior: "smooth" });
+    history.pushState(null, "", targetId);
+  });
+});
+
 menuIcon.onclick = () => {
   /* for on and off of the menu icons*/
   menuIcon.classList.toggle("bx-x");
