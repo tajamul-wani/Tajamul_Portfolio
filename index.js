@@ -87,6 +87,62 @@ filterBtns.forEach((btn) => {
   });
 });
 
+/* ================================= Case Study Metric Animation ========================================== */
+const metricCounters = document.querySelectorAll(".case-study-metrics strong");
+
+const animateMetricCounter = (element) => {
+  if (element.dataset.animated === "true") return;
+
+  const target = parseFloat(element.dataset.target || 0);
+  const suffix = element.dataset.suffix || "";
+  const decimals = Number.isInteger(target) ? 0 : 1;
+  const duration = 1400;
+  const startTime = performance.now();
+
+  const formatValue = (value) => {
+    const rounded = Number(value).toFixed(decimals);
+    return `${Number(rounded).toLocaleString(undefined, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })}${suffix}`;
+  };
+
+  const step = (currentTime) => {
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+    const easedProgress = 1 - Math.pow(1 - progress, 3);
+    const currentValue = target * easedProgress;
+
+    element.textContent = formatValue(currentValue);
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      element.textContent = formatValue(target);
+      element.dataset.animated = "true";
+    }
+  };
+
+  requestAnimationFrame(step);
+};
+
+const caseStudiesSection = document.querySelector(".case-studies");
+
+if (caseStudiesSection) {
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          metricCounters.forEach((counter) => animateMetricCounter(counter));
+          obs.disconnect();
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  observer.observe(caseStudiesSection);
+}
+
 /* ================================= ScrollReveal JS file========================================== */
 ScrollReveal({
   // reset: true,
