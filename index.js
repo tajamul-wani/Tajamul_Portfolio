@@ -1,173 +1,116 @@
-let menuIcon = document.querySelector("#menu-icon");
-let navbar = document.querySelector(".navbar");
-const dateYear = document.querySelector(".year");
-let sections = document.querySelectorAll("section");
-let navLinks = document.querySelectorAll("header nav a");
+﻿(function () {
+  "use strict";
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => {
-    const targetId = link.getAttribute("href");
+  const year = document.getElementById("yr");
+  if (year) year.textContent = new Date().getFullYear();
 
-    if (!targetId || targetId === "#") return;
+  const nav = document.getElementById("nav");
+  const burger = document.getElementById("burger");
+  const navLinks = Array.prototype.slice.call(
+    document.querySelectorAll("#navLinks a"),
+  );
+  const sections = navLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
 
-    const target = document.querySelector(targetId);
-    if (!target) return;
+  function onScroll() {
+    if (nav) nav.classList.toggle("is-stuck", window.scrollY > 24);
+  }
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
 
-    event.preventDefault();
-    const offset = 100;
-    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+  if (burger) {
+    burger.addEventListener("click", () => {
+      const open = nav.classList.toggle("is-open");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
 
-    window.scrollTo({ top, behavior: "smooth" });
-    history.pushState(null, "", targetId);
-  });
-});
-
-menuIcon.onclick = () => {
-  /* for on and off of the menu icons*/
-  menuIcon.classList.toggle("bx-x");
-  navbar.classList.toggle("active");
-};
-let currentYear = new Date().getFullYear();
-dateYear.innerHTML = `2024-${currentYear}`;
-window.onscroll = () => {
-  sections.forEach((sec) => {
-    let top = window.scrollY;
-    let offset = sec.offsetTop - 150;
-    let height = sec.offsetHeight;
-    let id = sec.getAttribute("id");
-
-    if (top >= offset && top < offset + height) {
-      navLinks.forEach((links) => {
-        links.classList.remove("active");
-        document
-          .querySelector("header nav a[ href*=" + id + "]")
-          .classList.add("active");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("is-open");
+        burger.setAttribute("aria-expanded", "false");
       });
-    }
-  });
-  let header = document.querySelector("header");
+    });
+  }
 
-  header.classList.toggle("sticky", window.scrollY > 100);
+  function spy() {
+    const pos = window.scrollY + window.innerHeight * 0.32;
+    let idx = 0;
+    sections.forEach((section, index) => {
+      if (section && section.offsetTop <= pos) idx = index;
+    });
+    navLinks.forEach((link, index) =>
+      link.classList.toggle("is-active", index === idx),
+    );
+  }
+  spy();
+  window.addEventListener("scroll", spy, { passive: true });
 
-  menuIcon.classList.remove("bx-x");
-  navbar.classList.remove("active");
-};
+  const revealEls = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    revealEls.forEach((el) => el.classList.add("in"));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
+    revealEls.forEach((el) => io.observe(el));
+  }
 
-window.addEventListener("scroll", () => {
-  const offerBoxes = document.querySelectorAll(".Projects-box");
+  const counters = document.querySelectorAll("[data-count]");
+  if (!reduce && "IntersectionObserver" in window) {
+    const countIo = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          const target = parseInt(el.getAttribute("data-count"), 10);
+          const suffixEl = el.querySelector("em");
+          const suffix = suffixEl ? suffixEl.outerHTML : "";
+          if (Number.isNaN(target) || target === 0) {
+            countIo.unobserve(el);
+            return;
+          }
+          const start = performance.now();
+          const duration = 1100;
+          const step = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.innerHTML = Math.round(target * eased) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+            else countIo.unobserve(el);
+          };
+          requestAnimationFrame(step);
+        });
+      },
+      { threshold: 0.5 },
+    );
 
-  offerBoxes.forEach((box) => {
-    const rect = box.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
+    counters.forEach((counter) => countIo.observe(counter));
+  }
 
-    // Check if the box is within a certain distance from the viewport
-    if (rect.top < viewportHeight * 1) {
-      box.classList.add("show-projectBox");
-
-      // After a delay, remove the 'show-offer' class to reset the animation
-      setTimeout(() => {
-        box.classList.remove("show-projectBox");
-      }, 2000); // Adjust the delay as needed
-    }
-  });
-});
-
-/* ================================= Projects Filter ========================================== */
-const filterBtns = document.querySelectorAll(".filter-btn");
-const projectBoxes = document.querySelectorAll(".Projects-box");
-
-filterBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    // Remove active class from all buttons
-    filterBtns.forEach((b) => b.classList.remove("active"));
-
-    // Add active class to clicked button
-    btn.classList.add("active");
-
-    // Get the filter value
-    const filterValue = btn.getAttribute("data-filter");
-
-    // Filter projects
-    projectBoxes.forEach((box) => {
-      const boxCategory = box.getAttribute("data-category");
-      const categories = boxCategory.split(" ");
-
-      if (filterValue === "all" || categories.includes(filterValue)) {
-        // Show project
-        setTimeout(() => {
-          box.classList.remove("hidden");
-        }, 0);
-      } else {
-        // Hide project
-        box.classList.add("hidden");
-      }
+  const filters = document.querySelectorAll(".filter");
+  const projects = document.querySelectorAll(".proj");
+  filters.forEach((button) => {
+    button.addEventListener("click", () => {
+      filters.forEach((btn) => btn.classList.remove("is-on"));
+      button.classList.add("is-on");
+      const filterValue = button.getAttribute("data-filter");
+      projects.forEach((project) => {
+        const categories = project.getAttribute("data-cat") || "";
+        project.classList.toggle(
+          "is-hidden",
+          !(filterValue === "all" || categories.indexOf(filterValue) > -1),
+        );
+      });
     });
   });
-});
-
-/* ================================= Case Study Metric Animation ========================================== */
-const metricCounters = document.querySelectorAll(".case-study-metrics strong");
-
-const animateMetricCounter = (element) => {
-  if (element.dataset.animated === "true") return;
-
-  const target = parseFloat(element.dataset.target || 0);
-  const suffix = element.dataset.suffix || "";
-  const decimals = Number.isInteger(target) ? 0 : 1;
-  const duration = 1400;
-  const startTime = performance.now();
-
-  const formatValue = (value) => {
-    const rounded = Number(value).toFixed(decimals);
-    return `${Number(rounded).toLocaleString(undefined, {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    })}${suffix}`;
-  };
-
-  const step = (currentTime) => {
-    const progress = Math.min((currentTime - startTime) / duration, 1);
-    const easedProgress = 1 - Math.pow(1 - progress, 3);
-    const currentValue = target * easedProgress;
-
-    element.textContent = formatValue(currentValue);
-
-    if (progress < 1) {
-      requestAnimationFrame(step);
-    } else {
-      element.textContent = formatValue(target);
-      element.dataset.animated = "true";
-    }
-  };
-
-  requestAnimationFrame(step);
-};
-
-const caseStudiesSection = document.querySelector(".case-studies");
-
-if (caseStudiesSection) {
-  const observer = new IntersectionObserver(
-    (entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          metricCounters.forEach((counter) => animateMetricCounter(counter));
-          obs.disconnect();
-        }
-      });
-    },
-    { threshold: 0.3 }
-  );
-
-  observer.observe(caseStudiesSection);
-}
-
-/* ================================= ScrollReveal JS file========================================== */
-ScrollReveal({
-  // reset: true,
-  distance: "80px",
-  duration: 2000,
-  delay: 200,
-});
-
-ScrollReveal().reveal(".home-content, .heading, .tech div ", { origin: "top" });
-ScrollReveal().reveal(".home-img, .skills-container", { origin: "bottom" });
+})();
