@@ -113,4 +113,24 @@
       });
     });
   });
+
+  const anchorLinks = document.querySelectorAll("a[href^='#']");
+  anchorLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const targetId = link.getAttribute("href");
+      if (!targetId || targetId === "#") {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+        return;
+      }
+
+      const target = document.querySelector(targetId);
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    });
+  });
 })();
