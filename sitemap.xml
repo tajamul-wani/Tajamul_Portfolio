@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tajamulwani.netlify.app/</loc>
+    <loc>https://tajamul-wani.netlify.app/</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://tajamulwani.netlify.app/#about</loc>
+    <loc>https://tajamul-wani.netlify.app/#about</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tajamulwani.netlify.app/#services</loc>
+    <loc>https://tajamul-wani.netlify.app/#services</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://tajamulwani.netlify.app/#Projects</loc>
+    <loc>https://tajamul-wani.netlify.app/#case-studies</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://tajamul-wani.netlify.app/#projects</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tajamulwani.netlify.app/#contact</loc>
+    <loc>https://tajamul-wani.netlify.app/#contact</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.80</priority>
