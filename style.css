@@ -1344,7 +1344,7 @@ select {
     padding-bottom: 56px;
   }
   .hero__portrait {
-    order: -1;
+    order: 0;
     max-width: 290px;
     justify-self: start;
   }
@@ -1372,6 +1372,12 @@ select {
   }
   .contact__grid {
     grid-template-columns: 1fr;
+  }
+  .contact__right {
+    order: 1;
+  }
+  .contact__left {
+    order: 2;
   }
   .contact__left,
   .contact__right {
@@ -1443,7 +1449,7 @@ select {
     grid-template-columns: 1fr;
   }
   .hero__portrait {
-    order: -1;
+    order: 0;
     max-width: 100%;
   }
   .hero__portrait-frame {
