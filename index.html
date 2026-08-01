@@ -55,9 +55,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      as="style"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      />
+    </noscript>
 
     <script>
       document.documentElement.classList.add("js");
@@ -201,6 +214,8 @@
                   alt="Portrait of Tajamul Wani"
                   width="380"
                   height="475"
+                  fetchpriority="high"
+                  decoding="async"
                 />
               </div>
               <div class="hero__tag">
@@ -647,6 +662,69 @@
                     <div class="metric">
                       <div class="metric__n" data-count="0">0</div>
                       <div class="metric__l">Manual sorting required</div>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </article>
+
+            <article id="case-study-wix" class="case reveal">
+              <div class="case__node">03</div>
+              <div class="case__inner">
+                <div class="case__main">
+                  <p class="case__client">Wix · Salesforce · Zapier</p>
+                  <h3>Marketing attribution &amp; CRM automation for Wix</h3>
+                  <p>
+                    The client needed a scalable landing-page lead flow for paid
+                    campaigns, but the native Wix form setup could not capture
+                    hidden attribution data such as UTM values and GCLID,
+                    lacked custom submission logic, and did not support the
+                    automated lead routing required for a high-intent funnel.
+                    The business also needed every submission to flow into
+                    Salesforce CRM in real time.
+                  </p>
+                  <div class="case__tools">
+                    <span>Wix Velo</span><span>JavaScript</span
+                    ><span>Wix CMS</span><span>Zapier</span><span>Webhooks</span
+                    ><span>Salesforce</span>
+                  </div>
+                  <ul class="case__list">
+                    <li>
+                      Built a custom Wix Velo form and CMS-backed storage layer
+                      to capture every lead with structured campaign data.
+                    </li>
+                    <li>
+                      Captured 10+ attribution fields per submission, including
+                      UTM parameters, GCLID, landing page URL, timestamps, and
+                      campaign source details.
+                    </li>
+                    <li>
+                      Connected the flow to Zapier webhooks for instant
+                      notifications and automated Salesforce lead creation with
+                      field mapping and real-time sync.
+                    </li>
+                  </ul>
+                </div>
+                <aside class="case__results">
+                  <h4>Results</h4>
+                  <div class="metrics">
+                    <div class="metric">
+                      <div class="metric__n" data-count="1">1</div>
+                      <div class="metric__l">Custom lead system built</div>
+                    </div>
+                    <div class="metric">
+                      <div class="metric__n" data-count="10">10+</div>
+                      <div class="metric__l">Attribution fields captured</div>
+                    </div>
+                    <div class="metric">
+                      <div class="metric__n" data-count="100">
+                        100<em style="font-style: normal">%</em>
+                      </div>
+                      <div class="metric__l">Lead workflow automated</div>
+                    </div>
+                    <div class="metric">
+                      <div class="metric__n" data-count="0">0</div>
+                      <div class="metric__l">Manual lead entry needed</div>
                     </div>
                   </div>
                 </aside>
@@ -1263,6 +1341,6 @@
       </div>
     </footer>
 
-    <script src="index.js"></script>
+    <script defer src="index.js"></script>
   </body>
 </html>
