@@ -1,7 +1,6 @@
 # Tajamul Wani Portfolio
 
-This repository contains the live portfolio website for Tajamul Wani, a Marketing Operations (MarOps) Engineer. The site showcases end-to-end marketing systems, CRM automation, funnels, and AI-directed product work.
-
+This repository contains the live portfolio website for Tajamul Wani, GTM Engineer.
 ## Overview
 
 The site is a responsive, static portfolio built with HTML, CSS, and vanilla JavaScript. It features:
@@ -14,14 +13,6 @@ The site is a responsive, static portfolio built with HTML, CSS, and vanilla Jav
 - Contact section with a Netlify-powered submission form
 - Footer with brand, copyright, and back-to-top interaction
 
-## Current Work Highlight
-
-- **LearnTopia** — AI-directed React learning platform using Firebase
-- **Newscryst** — AI-driven news experience deployed on Netlify
-- **FormPing** — QA automation and website monitoring tool with Supabase backend
-- **GoHighLevel marketing system** — full CRM/funnel implementation
-- **ClickFunnels sales funnel** — live funnel with order flow and automation
-- **Charity WordPress website** — responsive WordPress delivery for a UK charity
 
 ## Tech Stack
 
@@ -44,10 +35,7 @@ The site is a responsive, static portfolio built with HTML, CSS, and vanilla Jav
 The portfolio is intended to present a concise growth-systems brand narrative, with a focus on CRM automation, funnels, and AI-assisted product launches.
 
 ## Contact
-
-- Email: [thetj4054@gmail.com](mailto:thetj4054@gmail.com)
-- LinkedIn: https://www.linkedin.com/in/tajamul-wani/
-- GitHub: https://github.com/tajamul11
+- LinkedIn: https://www.linkedin.com/in/tajamul-wani
 
 ## License
 
