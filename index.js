@@ -5,6 +5,40 @@
   const year = document.getElementById("yr");
   if (year) year.textContent = new Date().getFullYear();
 
+  const contactForm = document.getElementById("contactForm");
+  if (contactForm) {
+    const attributionKeys = [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_term",
+      "utm_content",
+      "gclid",
+      "fbclid",
+    ];
+    const queryParams = new URLSearchParams(window.location.search);
+
+    attributionKeys.forEach((key) => {
+      const input = contactForm.querySelector(`[name="${key}"]`);
+      if (!input) return;
+
+      const queryValue = queryParams.get(key);
+      if (queryValue) {
+        input.value = queryValue;
+        try {
+          window.sessionStorage.setItem(`portfolio_${key}`, queryValue);
+        } catch {}
+        return;
+      }
+
+      try {
+        input.value = window.sessionStorage.getItem(`portfolio_${key}`) || "";
+      } catch {
+        input.value = "";
+      }
+    });
+  }
+
   const nav = document.getElementById("nav");
   const burger = document.getElementById("burger");
   const navLinks = Array.prototype.slice.call(

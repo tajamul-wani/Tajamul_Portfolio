@@ -43,6 +43,7 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  text-wrap: pretty;
 }
 img {
   display: block;
@@ -59,6 +60,16 @@ textarea,
 select {
   font: inherit;
   color: inherit;
+}
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+p,
+li {
+  text-wrap: pretty;
 }
 ::selection {
   background: var(--main-color);
@@ -110,12 +121,14 @@ select {
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1.14;
+  text-wrap: balance;
 }
 .sec-head p {
   margin-top: 16px;
   color: var(--muted);
   font-size: 1rem;
   font-weight: 300;
+  text-wrap: pretty;
 }
 .btn {
   display: inline-flex;
@@ -288,50 +301,17 @@ select {
   padding-bottom: 0;
   overflow: hidden;
 }
-.hero::before {
-  content: "";
-  position: absolute;
-  top: -160px;
-  right: -140px;
-  width: 620px;
-  height: 620px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(0, 238, 255, 0.11) 0%,
-    transparent 66%
-  );
-  pointer-events: none;
-}
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.055) 1px,
-    transparent 1px
-  );
-  background-size: 34px 34px;
-  -webkit-mask-image: radial-gradient(
-    ellipse 78% 62% at 46% 34%,
-    #000 0%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 78% 62% at 46% 34%,
-    #000 0%,
-    transparent 100%
-  );
-}
 .hero__grid {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1.12fr 0.88fr;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
   gap: 70px;
   align-items: center;
   padding-bottom: 84px;
+}
+.hero__grid > div:first-child {
+  min-width: 0;
 }
 .hero h1 {
   font-size: clamp(2.9rem, 6.4vw, 4.55rem);
@@ -339,6 +319,7 @@ select {
   line-height: 1.02;
   letter-spacing: -0.045em;
   margin-bottom: 20px;
+  text-wrap: balance;
 }
 .hero__role {
   font-size: clamp(1.2rem, 2.2vw, 1.5rem);
@@ -346,6 +327,7 @@ select {
   line-height: 1.45;
   letter-spacing: -0.02em;
   color: var(--main-color);
+  max-width: 58ch;
   margin-bottom: 22px;
 }
 .hero__role .sep {
@@ -357,8 +339,9 @@ select {
   color: var(--muted);
   font-weight: 300;
   font-size: 1rem;
-  max-width: 52ch;
+  max-width: 58ch;
   margin-bottom: 36px;
+  text-wrap: pretty;
 }
 .hero__actions {
   display: flex;
@@ -518,6 +501,7 @@ select {
   color: var(--muted);
   font-weight: 300;
   margin-bottom: 20px;
+  text-wrap: pretty;
 }
 .about__body p strong {
   color: var(--text-color);
@@ -643,6 +627,7 @@ select {
   letter-spacing: -0.02em;
   margin-bottom: 11px;
   line-height: 1.3;
+  text-wrap: balance;
 }
 .svc p {
   font-size: 0.885rem;
@@ -650,6 +635,7 @@ select {
   font-weight: 300;
   line-height: 1.68;
   margin-bottom: 18px;
+  text-wrap: pretty;
 }
 .svc ul {
   list-style: none;
@@ -743,12 +729,14 @@ select {
   letter-spacing: -0.03em;
   line-height: 1.25;
   margin-bottom: 16px;
+  text-wrap: balance;
 }
 .case__main > p {
   color: var(--muted);
   font-weight: 300;
   font-size: 0.92rem;
   margin-bottom: 24px;
+  text-wrap: pretty;
 }
 .case__tools {
   display: flex;
@@ -776,6 +764,7 @@ select {
   color: var(--muted);
   font-weight: 300;
   line-height: 1.6;
+  text-wrap: pretty;
 }
 .case__list li::before {
   content: "";
@@ -922,6 +911,7 @@ select {
   letter-spacing: -0.02em;
   line-height: 1.32;
   margin-bottom: 10px;
+  text-wrap: balance;
 }
 .proj__body p {
   font-size: 0.845rem;
@@ -930,6 +920,7 @@ select {
   line-height: 1.62;
   flex: 1;
   margin-bottom: 20px;
+  text-wrap: pretty;
 }
 .proj__link {
   display: inline-flex;
@@ -977,12 +968,14 @@ select {
   letter-spacing: -0.035em;
   line-height: 1.16;
   margin-bottom: 16px;
+  text-wrap: balance;
 }
 .contact__left > p {
   color: var(--muted);
   font-weight: 300;
   font-size: 0.93rem;
   margin-bottom: 34px;
+  text-wrap: pretty;
 }
 .info {
   display: grid;
@@ -1115,11 +1108,30 @@ select {
 .field select {
   appearance: none;
   cursor: pointer;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300eeff' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 15px;
   padding-right: 42px;
+}
+.select-wrap {
+  position: relative;
+}
+.select-wrap select {
+  display: block;
+  padding-right: 48px;
+}
+.select-chevron {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  width: 9px;
+  height: 9px;
+  border-right: 1.5px solid var(--main-color);
+  border-bottom: 1.5px solid var(--main-color);
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+  transition: transform 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.select-wrap:focus-within .select-chevron {
+  border-color: var(--text-color);
+  transform: translateY(-25%) rotate(225deg);
 }
 .field select option {
   background: var(--bg-color);
